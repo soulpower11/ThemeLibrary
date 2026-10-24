@@ -15,7 +15,7 @@ import { classes } from "@utils/misc";
 import { ModalContent, ModalFooter, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import type { PluginNative } from "@utils/types";
 import { findComponentByCodeLazy } from "@webpack";
-import { Button, Parser, React, showToast, Toasts } from "@webpack/common";
+import { Button, Parser, React, showToast } from "@webpack/common";
 
 import { Theme, ThemeInfoModalProps } from "../types";
 import { ClockIcon, DownloadIcon, WarningIcon } from "../utils/Icons";
@@ -27,10 +27,10 @@ const UserSummaryItem = findComponentByCodeLazy("defaultRenderUser", "showDefaul
 async function downloadTheme(themesDir: string, theme: Theme) {
     try {
         await Native.downloadTheme(themesDir, theme);
-        showToast(`Downloaded ${theme.name}!`, Toasts.Type.SUCCESS);
+        showToast({text: `Downloaded ${theme.name}!`, variant: "success"});
     } catch (err: unknown) {
         logger.error(err);
-        showToast(`Failed to download ${theme.name}! (check console)`, Toasts.Type.FAILURE);
+        showToast({text: `Failed to download ${theme.name}! (check console)`, variant: "critical"});
     }
 }
 
@@ -114,7 +114,7 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                         onClick={async e => {
                                             e.preventDefault();
                                             const useInvite = guild ? guild.invite_link?.split("discord.gg/")[1] : invite;
-                                            useInvite != null && openInviteModal(useInvite).catch(() => showToast("Invalid or expired invite!", Toasts.Type.FAILURE));
+                                            useInvite != null && openInviteModal(useInvite).catch(() => showToast({text: "Invalid or expired invite!", variant: "critical"}));
                                         }}
                                     >
                                         Join Discord Server
@@ -149,7 +149,7 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                             <Button className={Margins.right8}
                                                 onClick={() => {
                                                     copyToClipboard(themeContent);
-                                                    showToast("Copied to Clipboard", Toasts.Type.SUCCESS);
+                                                    showToast({text: "Copied to Clipboard", variant: "success"});
                                                 }}>Copy to Clipboard</Button>
                                         </ModalFooter>
                                     </ModalRoot>
