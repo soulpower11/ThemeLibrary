@@ -6,11 +6,13 @@
 
 import * as DataStore from "@api/DataStore";
 import { Button } from "@components/Button";
+import { Margins } from "@components/margins";
 import { useEffect, useRef, useState } from "@webpack/common";
 
 import type { Theme, ThemeLikeProps } from "../types";
 import { isAuthorized } from "../utils/auth";
 import { LikeIcon } from "../utils/Icons";
+
 import { logger, themeRequest } from "./ThemeTab";
 
 export const LikesComponent = ({ themeId, likedThemes: initialLikedThemes }: { themeId: Theme["id"], likedThemes: ThemeLikeProps | undefined; }) => {
@@ -79,15 +81,13 @@ export const LikesComponent = ({ themeId, likedThemes: initialLikedThemes }: { t
     const hasLiked = likedThemes?.likes.some(like => like.themeId === themeId as unknown as Number && like?.hasLiked === true) ?? false;
 
     return (
-        <div>
-            <Button onClick={() => handleLikeClick(themeId)}
-                size="medium"
-                variant="secondary"
-                disabled={themeId === "preview"}
-                style={{ marginLeft: "8px" }}
-            >
-                {LikeIcon(hasLiked || themeId === "preview")} {themeId === "preview" ? 143 : likesCount}
-            </Button>
-        </div>
+        <Button onClick={() => handleLikeClick(themeId)}
+            variant="secondary"
+            size="medium"
+            disabled={themeId === "preview"}
+            className={Margins.right8}
+        >
+            {LikeIcon(hasLiked || themeId === "preview")} {themeId === "preview" ? 143 : likesCount}
+        </Button>
     );
 };

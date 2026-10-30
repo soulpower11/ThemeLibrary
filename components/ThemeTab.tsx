@@ -18,12 +18,12 @@ import { Logger } from "@utils/Logger";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { findCssClassesLazy } from "@webpack";
-import { React, SearchableSelect, TabBar, TextInput, useEffect, useState } from "@webpack/common";
+import { React, SearchableSelect, TextInput, useEffect, useState } from "@webpack/common";
 
-import { SearchStatus, TabItem, Theme, ThemeLikeProps } from "../types";
+import { SearchStatus, Theme, ThemeLikeProps } from "../types";
 import { ThemeCard } from "./ThemeCard";
 
-const InputStyles = findCssClassesLazy("inputWrapper", "inputError", "error");
+const InputStyles = findCssClassesLazy("inputWrapper", "editable", "error");
 
 export const apiUrl = "https://themes.equicord.org/api";
 export const logger = new Logger("ThemeLibrary", "#e5c890");
@@ -65,12 +65,13 @@ function ThemeTab() {
     const [searchValue, setSearchValue] = useState({ value: "", status: SearchStatus.ALL });
     const [hideWarningCard, setHideWarningCard] = useState(Settings.plugins.ThemeLibrary.hideWarningCard);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const onSearch = (query: string) => setSearchValue(prev => ({ ...prev, value: query }));
     const onStatusChange = (status: SearchStatus) => setSearchValue(prev => ({ ...prev, status }));
 
     const themeFilter = (theme: Theme) => {
-        const enabled = themeLinks.includes(`${apiUrl}/${theme.name}`);
+        const enabled = themeLinks.includes(`${apiUrl}/${theme.id}`);
 
         const tags = new Set(theme.tags.map(tag => tag?.toLowerCase()));
 
@@ -116,6 +117,7 @@ function ThemeTab() {
                 setFilteredThemes(themes);
             } catch (err) {
                 logger.error(err);
+                setError(true);
             } finally {
                 setLoading(false);
             }
@@ -162,6 +164,11 @@ function ThemeTab() {
                         }}> This won't take long! </p>
 
                     </div>
+                ) : error ? (
+                    <ErrorCard>
+                        <HeadingTertiary>Failed to fetch themes</HeadingTertiary>
+                        <Paragraph className={Margins.top8}>Could not fetch the theme list. Try again later.</Paragraph>
+                    </ErrorCard>
                 ) : (
                     <>
                         {hideWarningCard ? null : (
@@ -176,7 +183,7 @@ function ThemeTab() {
                                         setHideWarningCard(true);
                                     }}
                                     size="small"
-                                    variant= "dangerPrimary"
+                                    variant="dangerPrimary"
                                     className={classes(Margins.top16, "vce-warning-button")}
                                 >Hide</Button>
                             </ErrorCard>
@@ -262,63 +269,10 @@ function ThemeTab() {
     );
 }
 
-// rework this!
-function SubmitThemes() {
-    return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "70vh",
-                fontSize: "1.5em",
-                color: "var(--text-default)"
-            }}>
-            <p>
-                This tab was replaced in favour of the new website:
-                {" "}
-                <a href="https://themes.equicord.org" target="_blank" rel="noreferrer">
-                    themes.equicord.org
-                </a>
-            </p>
-            <p style={{
-                fontSize: ".75em",
-                color: "var(--text-muted)"
-            }}>
-                Thank you for your understanding!
-            </p>
-        </div>
-    );
-}
-
 function ThemeLibrary() {
-    const [currentTab, setCurrentTab] = useState(TabItem.THEMES);
-
     return (
         <SettingsTab>
-            <TabBar
-                type="top"
-                look="brand"
-                className="vc-settings-tab-bar"
-                selectedItem={currentTab}
-                onItemSelect={setCurrentTab}
-            >
-                <TabBar.Item
-                    className="vc-settings-tab-bar-item"
-                    id={TabItem.THEMES}
-                >
-                    Themes
-                </TabBar.Item>
-                <TabBar.Item
-                    className="vc-settings-tab-bar-item"
-                    id={TabItem.SUBMIT_THEMES}
-                >
-                    Submit Theme
-                </TabBar.Item>
-            </TabBar>
-
-            {currentTab === TabItem.THEMES ? <ThemeTab /> : <SubmitThemes />}
+            <ThemeTab />
         </SettingsTab>
     );
 }

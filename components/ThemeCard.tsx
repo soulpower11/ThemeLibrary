@@ -8,17 +8,15 @@ import { generateId } from "@api/Commands";
 import { Settings } from "@api/Settings";
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
-import { HeadingPrimary, HeadingTertiary } from "@components/Heading";
-import { OpenExternalIcon } from "@components/Icons";
+import { HeadingPrimary } from "@components/Heading";
 import { Paragraph } from "@components/Paragraph";
 import { proxyLazy } from "@utils/lazy";
 import { Margins } from "@utils/margins";
-import { ModalContent, ModalFooter, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { User } from "@vencord/discord-types";
-import { FluxDispatcher, Parser, React, UserStore, UserUtils } from "@webpack/common";
+import { FluxDispatcher, Modal, openModal, Parser, React, UserStore, UserUtils } from "@webpack/common";
 import { Constructor } from "type-fest";
-
 import type { Theme, ThemeLikeProps } from "../types";
+
 import { LikesComponent } from "./LikesComponent";
 import { ThemeInfoModal } from "./ThemeInfoModal";
 import { apiUrl } from "./ThemeTab";
@@ -66,36 +64,32 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
 
         if (requiresThemeAttributes && !Settings.plugins.ThemeAttributes.enabled) {
             openModal(modalProps => (
-                <ModalRoot {...modalProps} size={ModalSize.SMALL}>
-                    <ModalHeader>
-                        <HeadingTertiary>Hold on!</HeadingTertiary>
-                    </ModalHeader>
-                    <ModalContent>
-                        <Paragraph style={{ padding: "8px" }}>
-                            <p>This theme requires the <b>ThemeAttributes</b> plugin to work properly!</p>
-                            <p>Do you want to enable it?</p>
-                        </Paragraph>
-                    </ModalContent>
-                    <ModalFooter>
-                        <Button
-                            variant="primary"
-                            onClick={() => {
+                <Modal
+                    {...modalProps}
+                    size="sm"
+                    title="Hold on!"
+                    actions={[
+                        {
+                            text: "Enable Plugin",
+                            variant: "primary",
+                            onClick: () => {
                                 Settings.plugins.ThemeAttributes.enabled = true;
                                 modalProps.onClose();
                                 handleAddRemoveTheme();
-                            }}
-                        >
-                            Enable Plugin
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            className={Margins.right8}
-                            onClick={() => modalProps.onClose()}
-                        >
-                            Cancel
-                        </Button>
-                    </ModalFooter>
-                </ModalRoot>
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            variant: "secondary",
+                            onClick: () => modalProps.onClose()
+                        }
+                    ]}
+                >
+                    <Paragraph style={{ padding: "8px" }}>
+                        <p>This theme requires the <b>ThemeAttributes</b> plugin to work properly!</p>
+                        <p>Do you want to enable it?</p>
+                    </Paragraph>
+                </Modal>
             ));
         } else {
             handleAddRemoveTheme();
@@ -116,10 +110,10 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
 
     return (
         <Card style={{ padding: ".5rem", marginBottom: ".5em", marginTop: ".5em", display: "flex", flexDirection: "column", backgroundColor: "var(--background-base-lower-alt)" }} key={theme.id}>
-            <HeadingPrimary style={{ overflowWrap: "break-word", marginTop: 8 }} className="vce-theme-text">
+            <HeadingPrimary style={{ overflowWrap: "break-word", marginTop: "8px" }} className="vce-theme-text-title">
                 {theme.name}
             </HeadingPrimary>
-            <Paragraph className="vce-theme-text">
+            <Paragraph className="vce-theme-text-description">
                 {Parser.parse(theme.description)}
             </Paragraph>
             {!removePreview && (
@@ -156,6 +150,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
                                     openModal(props => <ThemeInfoModal {...props} author={authors} theme={theme} />);
                                 }}
                                 size="medium"
+                                className={Margins.right8}
                             >
                                 Theme Info
                             </Button>

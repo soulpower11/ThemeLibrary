@@ -6,9 +6,9 @@
 
 import * as DataStore from "@api/DataStore";
 import { definePluginSettings } from "@api/Settings";
+import { Button } from "@components/Button";
 import { HeadingSecondary } from "@components/Heading";
 import { OpenExternalIcon } from "@components/Icons";
-import { Button } from "@components/Button";
 import { Paragraph } from "@components/Paragraph";
 import { copyToClipboard } from "@utils/clipboard";
 import { classNameFactory } from "@utils/css";
@@ -36,8 +36,8 @@ export const settings = definePluginSettings({
                 if (!token) return showToast({
                     text: "No token to copy, try authorizing first!",
                     variant: "critical",
-                    position: "bottom",
                     duration: 2.5e3,
+                    position: "bottom"
                 });
 
                 copyToClipboard(token);
@@ -45,8 +45,8 @@ export const settings = definePluginSettings({
                 showToast({
                     text: "Copied to Clipboard!",
                     variant: "success",
-                    position: "bottom",
                     duration: 2.5e3,
+                    position: "bottom"
                 });
             };
 
@@ -60,7 +60,7 @@ export const settings = definePluginSettings({
                         <Button onClick={handleClick}>
                             Copy ThemeLibrary Token
                         </Button>
-                        <Button color={Button.Colors.RED} onClick={() => deauthorizeUser()}>
+                        <Button variant="dangerPrimary" onClick={() => deauthorizeUser()}>
                             Deauthorize ThemeLibrary
                         </Button>
                     </div>

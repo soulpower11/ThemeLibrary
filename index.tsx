@@ -5,10 +5,12 @@
  */
 
 import SettingsPlugin from "@plugins/_core/settings";
+import { removeFromArray } from "@utils/misc";
 import definePlugin from "@utils/types";
 import { SettingsRouter } from "@webpack/common";
 
 import { settings } from "./utils/settings";
+import { ColorPaletteIcon } from "./utils/Icons";
 
 export default definePlugin({
     name: "ThemeLibrary",
@@ -22,25 +24,20 @@ export default definePlugin({
     settings,
     toolboxActions: {
         "Open Theme Library": () => {
-            SettingsRouter.open("ThemeLibrary");
+            SettingsRouter.openUserSettings("equicord_theme_library_panel");
         },
     },
 
     start() {
-        const { customSections } = SettingsPlugin;
-
-        customSections.push(() => ({
-            section: "ThemeLibrary",
-            label: "Theme Library",
-            searchableTitles: ["Theme Library"],
-            element: require("./components/ThemeTab").default,
-            id: "ThemeLibrary",
-        }));
+        SettingsPlugin.customEntries.push({
+            key: "vencord_theme_library",
+            title: "Theme Library",
+            Component: require("./components/ThemeTab").default,
+            Icon: ColorPaletteIcon
+        });
     },
 
     stop() {
-        const { customSections } = SettingsPlugin;
-        const section = customSections.findIndex(section => section({} as any).id === "ThemeLibrary");
-        if (section !== -1) customSections.splice(section, 1);
+        removeFromArray(SettingsPlugin.customEntries, e => e.key === "vencord_theme_library");
     },
 });

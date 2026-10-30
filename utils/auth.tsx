@@ -6,10 +6,9 @@
 
 import * as DataStore from "@api/DataStore";
 import { showNotification } from "@api/Notifications";
-import { openModal } from "@utils/modal";
-import { OAuth2AuthorizeModal, showToast, UserStore } from "@webpack/common";
-
+import { OAuth2AuthorizeModal, openModal, showToast,UserStore } from "@webpack/common";
 import { logger, themeRequest } from "../components/ThemeTab";
+
 
 export async function authorizeUser(triggerModal: boolean = true) {
     const isAuthorized = await getAuthorization();
@@ -69,8 +68,8 @@ export async function deauthorizeUser() {
     if (!uniqueToken) return showToast({
         text: "No uniqueToken present, try authorizing first!",
         variant: "critical",
-        position: "bottom",
         duration: 2e3,
+        position: "bottom"
     });
 
     const res = await themeRequest("/user/revoke", {
