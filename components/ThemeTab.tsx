@@ -8,6 +8,7 @@ import "./styles.css";
 
 import * as DataStore from "@api/DataStore";
 import { Settings } from "@api/Settings";
+import { Button } from "@components/Button";
 import { ErrorCard } from "@components/ErrorCard";
 import { HeadingPrimary, HeadingTertiary } from "@components/Heading";
 import { OpenExternalIcon } from "@components/Icons";
@@ -17,7 +18,7 @@ import { Logger } from "@utils/Logger";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { findCssClassesLazy } from "@webpack";
-import { Button, React, SearchableSelect, TabBar, TextInput, useEffect, useState } from "@webpack/common";
+import { React, SearchableSelect, TabBar, TextInput, useEffect, useState } from "@webpack/common";
 
 import { SearchStatus, TabItem, Theme, ThemeLikeProps } from "../types";
 import { ThemeCard } from "./ThemeCard";

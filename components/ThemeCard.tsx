@@ -6,6 +6,7 @@
 
 import { generateId } from "@api/Commands";
 import { Settings } from "@api/Settings";
+import { Button } from "@components/Button";
 import { Card } from "@components/Card";
 import { HeadingPrimary, HeadingTertiary } from "@components/Heading";
 import { OpenExternalIcon } from "@components/Icons";
@@ -14,7 +15,7 @@ import { proxyLazy } from "@utils/lazy";
 import { Margins } from "@utils/margins";
 import { ModalContent, ModalFooter, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { User } from "@vencord/discord-types";
-import { Button, FluxDispatcher, Parser, React, UserStore, UserUtils } from "@webpack/common";
+import { FluxDispatcher, Parser, React, UserStore, UserUtils } from "@webpack/common";
 import { Constructor } from "type-fest";
 
 import type { Theme, ThemeLikeProps } from "../types";

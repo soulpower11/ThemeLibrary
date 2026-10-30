@@ -5,7 +5,8 @@
  */
 
 import * as DataStore from "@api/DataStore";
-import { Button, useEffect, useRef, useState } from "@webpack/common";
+import { Button } from "@components/Button";
+import { useEffect, useRef, useState } from "@webpack/common";
 
 import type { Theme, ThemeLikeProps } from "../types";
 import { isAuthorized } from "../utils/auth";

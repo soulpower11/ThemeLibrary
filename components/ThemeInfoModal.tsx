@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+import { Button } from "@components/Button";
 import { CodeBlock } from "@components/CodeBlock";
 import { Heading, HeadingTertiary } from "@components/Heading";
 import { Heart } from "@components/Heart";
@@ -15,7 +16,7 @@ import { classes } from "@utils/misc";
 import { ModalContent, ModalFooter, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import type { PluginNative } from "@utils/types";
 import { findComponentByCodeLazy } from "@webpack";
-import { Button, Parser, React, showToast } from "@webpack/common";
+import { Parser, React, showToast } from "@webpack/common";
 
 import { Theme, ThemeInfoModalProps } from "../types";
 import { ClockIcon, DownloadIcon, WarningIcon } from "../utils/Icons";
