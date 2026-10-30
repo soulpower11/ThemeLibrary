@@ -78,8 +78,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
                     </ModalContent>
                     <ModalFooter>
                         <Button
-                            look={Button.Looks.FILLED}
-                            color={Button.Colors.GREEN}
+                            variant="primary"
                             onClick={() => {
                                 Settings.plugins.ThemeAttributes.enabled = true;
                                 modalProps.onClose();
@@ -89,8 +88,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
                             Enable Plugin
                         </Button>
                         <Button
-                            color={Button.Colors.RED}
-                            look={Button.Looks.FILLED}
+                            variant="secondary"
                             className={Margins.right8}
                             onClick={() => modalProps.onClose()}
                         >
@@ -142,9 +140,8 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
                         <div style={{ marginTop: "8px", display: "flex", flexDirection: "row" }}>
                             <Button
                                 onClick={handleThemeAttributesCheck}
-                                size={Button.Sizes.MEDIUM}
-                                color={themeLinks.includes(`${apiUrl}/${theme.id}`) ? Button.Colors.RED : Button.Colors.GREEN}
-                                look={Button.Looks.FILLED}
+                                size="medium"
+                                variant={themeLinks.includes(`${apiUrl}/${theme.id}`) ? "dangerPrimary" : "positive"}
                                 className={Margins.right8}
                                 disabled={!theme.content || theme.id === "preview"}
                             >
@@ -158,22 +155,19 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
 
                                     openModal(props => <ThemeInfoModal {...props} author={authors} theme={theme} />);
                                 }}
-                                size={Button.Sizes.MEDIUM}
-                                color={Button.Colors.BRAND}
-                                look={Button.Looks.FILLED}
+                                size="medium"
                             >
                                 Theme Info
                             </Button>
                             <LikesComponent themeId={theme.id} likedThemes={likedThemes} />
                             <Button
                                 onClick={handleViewSource}
-                                size={Button.Sizes.MEDIUM}
-                                color={Button.Colors.LINK}
-                                look={Button.Looks.LINK}
+                                size="medium"
+                                variant="link"
                                 disabled={!theme.content || theme.id === "preview"}
                                 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
                             >
-                                View Source <OpenExternalIcon height={16} width={16} />
+                                View Source
                             </Button>
                         </div>
                     )}

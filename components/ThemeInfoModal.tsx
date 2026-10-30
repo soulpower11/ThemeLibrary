@@ -109,8 +109,7 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                 )}
                                 <Paragraph>
                                     <Button
-                                        color={Button.Colors.BRAND}
-                                        look={Button.Looks.FILLED}
+                                        variant="primary"
                                         className={Margins.top8}
                                         onClick={async e => {
                                             e.preventDefault();
@@ -141,13 +140,14 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                         </ModalContent>
                                         <ModalFooter>
                                             <Button
-                                                color={Button.Colors.RED}
-                                                look={Button.Looks.FILLED}
+                                                variant="dangerPrimary"
                                                 onClick={() => modalProps.onClose()}
                                             >
                                                 Close
                                             </Button>
-                                            <Button className={Margins.right8}
+                                            <Button
+                                                variant="primary"
+                                                className={Margins.right8}
                                                 onClick={() => {
                                                     copyToClipboard(themeContent);
                                                     showToast({text: "Copied to Clipboard", variant: "success"});
@@ -186,15 +186,13 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
             </ModalContent>
             <ModalFooter>
                 <Button
-                    color={Button.Colors.RED}
-                    look={Button.Looks.FILLED}
+                    variant="secondary"
                     onClick={() => props.onClose()}
                 >
                     Close
                 </Button>
                 <Button
-                    color={Button.Colors.GREEN}
-                    look={Button.Looks.FILLED}
+                    variant="primary"
                     className={classes("vce-button", Margins.right8)}
                     disabled={!theme.content || theme.id === "preview"}
                     onClick={async () => {
@@ -226,8 +224,7 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                     </ModalContent>
                                     <ModalFooter>
                                         <Button
-                                            look={Button.Looks.FILLED}
-                                            color={Button.Colors.RED}
+                                            variant="dangerPrimary"
                                             onClick={async () => {
                                                 await downloadTheme(themesDir, theme);
                                                 modalProps.onClose();
@@ -236,8 +233,7 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
                                             Overwrite
                                         </Button>
                                         <Button
-                                            color={Button.Colors.GREEN}
-                                            look={Button.Looks.FILLED}
+                                            variant="successPrimary"
                                             className={Margins.right8} onClick={() => modalProps.onClose()}
                                         >
                                             Keep my file

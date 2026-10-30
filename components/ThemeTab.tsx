@@ -175,9 +175,8 @@ function ThemeTab() {
                                         Settings.plugins.ThemeLibrary.hideWarningCard = true;
                                         setHideWarningCard(true);
                                     }}
-                                    size={Button.Sizes.SMALL}
-                                    color={Button.Colors.RED}
-                                    look={Button.Looks.FILLED}
+                                    size="small"
+                                    variant= "dangerPrimary"
                                     className={classes(Margins.top16, "vce-warning-button")}
                                 >Hide</Button>
                             </ErrorCard>
