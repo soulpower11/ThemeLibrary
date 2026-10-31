@@ -8,7 +8,7 @@ import { generateId } from "@api/Commands";
 import { Settings } from "@api/Settings";
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
-import { HeadingPrimary } from "@components/Heading";
+import { Heading } from "@components/Heading";
 import { Paragraph } from "@components/Paragraph";
 import { proxyLazy } from "@utils/lazy";
 import { Margins } from "@utils/margins";
@@ -110,9 +110,9 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, themeLinks, likedTh
 
     return (
         <Card style={{ padding: ".5rem", marginBottom: ".5em", marginTop: ".5em", display: "flex", flexDirection: "column", backgroundColor: "var(--background-base-lower-alt)" }} key={theme.id}>
-            <HeadingPrimary style={{ overflowWrap: "break-word", marginTop: "8px" }} className="vce-theme-text-title">
+            <Heading style={{ overflowWrap: "break-word", marginTop: "8px" }} className="vce-theme-text-title" tag="h2">
                 {theme.name}
-            </HeadingPrimary>
+            </Heading>
             <Paragraph className="vce-theme-text-description">
                 {Parser.parse(theme.description)}
             </Paragraph>
